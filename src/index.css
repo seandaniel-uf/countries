@@ -1,0 +1,11 @@
+body {
+  background: #272727;
+  color: #f4f4f4;
+  font-family: "Arial";
+}
+
+.wrapper {
+  margin: 0 auto;
+  max-width: 1400px;
+  width: 98%;
+}
