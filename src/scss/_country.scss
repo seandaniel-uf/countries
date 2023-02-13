@@ -1,0 +1,55 @@
+@import "_variables.scss";
+
+.country-ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+li.country-card {
+  width: 20%;
+  height: 190px;
+  button {
+    width: 100%;
+    figure {
+      position: relative;
+      img {
+        width: 100%;
+        height: 190px;
+        object-fit: cover;
+      }
+      figcaption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 60px;
+        font-weight: 700;
+        color: $primaryColor;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+      }
+    }
+  }
+}
+
+.modal-underlay {
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 1010;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  text-align: center;
+  background: $primaryColor;
+  color: $secondaryColor;
+  border-radius: 5px;
+  padding: 10px;
+  max-width: 400px;
+}

@@ -1,34 +1,14 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./index.css";
+import "./scss/index.scss";
 
 // components
 import { Country } from "./components/Country";
+import { Filter } from "./components/Filter";
 
 const App = (): JSX.Element => {
   const [countryData, setCountryData] = useState<[]>([]);
-
-  interface Country {
-    fifa: string;
-    flags: {
-      png: string;
-      alt: string;
-    };
-    name: {
-      official: string;
-    };
-    population: number;
-    continents: string[];
-    capital: string[];
-    // currencies: {
-    //   // this changes? (USD, NOK)
-    //   object: {
-    //     name: string,
-    //   }
-    // },
-    currencies: object;
-    languages: object;
-  }
+  const [selectValue, getSelectValue] = useState<string>("");
 
   useEffect(() => {
     getCountryData();
@@ -39,27 +19,59 @@ const App = (): JSX.Element => {
     setCountryData(data);
   };
 
+  const handleFilter = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    getSelectValue(e.target.value);
+
+    if (e.target.value === "Ascending") {
+      const ascendingCountries = countryData.sort(
+        (a: any, b: any): number => b.population - a.population
+      );
+      setCountryData(ascendingCountries);
+    } else if (e.target.value === "Descending") {
+      const descendingCountries = countryData.sort(
+        (a: any, b: any): number => a.population - b.population
+      );
+      setCountryData(descendingCountries);
+    }
+  };
+
   return (
-    <div className="wrapper">
-      <h1>Countries</h1>
-      <ul>
+    <>
+      <Filter handleFilter={handleFilter} />
+      <ul className="country-ul">
         {countryData.map(
-          ({
-            //fifa
-            cca3,
-            flags,
-            name,
-            population,
-            continents,
-            capital,
-            // currencies,
-            // languages,
-          }) => {
-            return <Country cca3={cca3} />;
+          (
+            {
+              cca3,
+              flags,
+              name,
+              population,
+              continents,
+              capital,
+              currencies,
+              languages,
+              maps,
+            },
+            index
+          ) => {
+            return (
+              <Country
+                key={index}
+                cca3={cca3}
+                flags={flags}
+                name={name}
+                population={population}
+                currencies={currencies}
+                continents={continents}
+                capital={capital}
+                languages={languages}
+                maps={maps}
+              />
+            );
           }
         )}
       </ul>
-    </div>
+    </>
   );
 };
 
